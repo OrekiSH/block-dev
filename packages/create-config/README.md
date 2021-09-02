@@ -55,6 +55,12 @@ interface {
   repository?: string // repository in package.json
   author?: string // author in package.json
   homepage?: string // homepage in package.json
+
+  /* custom */
+  custom_scripts?: Record<string, string> // append fields in scripts filed
+  custom_dependencies?: Record<string, string> // append fields in dependencies filed
+  custom_dev_dependencies?: Record<string, string> // append fields in devDependencies filed
+  custom_package_json_fields: Record<string, any> // overwrite fields in package.json
 }
 ```
 

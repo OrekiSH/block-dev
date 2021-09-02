@@ -114,6 +114,7 @@ async function init() {
     );
   } catch (cancelled: any) {
     console.error(cancelled.message);
+    return;
   }
 
   // user choice associated with prompts

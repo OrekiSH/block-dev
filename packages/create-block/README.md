@@ -1,8 +1,18 @@
 <h1 align="center">@block-dev/create-block</h1>
 
-🔨 CLI to create a well linted project
+🔨 Scaffolding a well linted project
 
 ## Usage
+
+```shell
+npm init @block-dev/block@latest
+# OR
+yarn create @block-dev/block
+# OR
+pnpx @block-dev/create-block
+```
+
+## Relation
 
 Config in this package is created by following code:
 
@@ -11,7 +21,7 @@ import { genConfigFiles } from '@block-dev/create-config';
 
 genConfigFiles({
   name: '@block-dev/create-block',
-  description: '🔨 CLI to create a well linted project',
+  description: '🔨 Scaffolding a well linted project',
   license: 'MIT',
   author: 'OrekiSH <orekish@163.com> (https://github.com/OrekiSH)',
   repository: 'https://github.com/OrekiSH/block-dev',
@@ -27,7 +37,7 @@ genConfigFiles({
     kolorist: '^1.5.0',
     minimist: '^1.2.5',
     prompts: '^2.4.1',
-    '@block-dev/create-config': 'latest'
+    '@block-dev/create-config': '^0.1.2'
   },
   custom_scripts: {
     build: 'npm-run-all --parallel build:*',
@@ -35,5 +45,10 @@ genConfigFiles({
     'build:cjs': 'tsc',
     'lint:js': 'eslint . --ignore-path .eslintignore',
   },
+  custom_package_json_fields: {
+    bin: {
+      'create-block': 'lib/index.js'
+    }
+  }
 });
 ```

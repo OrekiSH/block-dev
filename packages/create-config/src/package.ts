@@ -20,6 +20,7 @@ export interface PackageJSONOptions
   custom_scripts?: Record<string, string>;
   custom_dependencies?: Record<string, string>;
   custom_dev_dependencies?: Record<string, string>;
+  custom_package_json_fields?: Record<string, any>;
   main?: boolean;
   editorconfig?: boolean;
   gitignore?: boolean;
@@ -162,6 +163,7 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
     publishConfig: {
       access: 'public',
     },
+    ...opts.custom_package_json_fields,
   };
 };
 

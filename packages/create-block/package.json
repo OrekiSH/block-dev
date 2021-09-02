@@ -1,7 +1,7 @@
 {
   "name": "@block-dev/create-block",
-  "version": "0.1.1",
-  "description": "🔨 CLI to create a well linted project",
+  "version": "0.1.4",
+  "description": "🔨 Scaffolding a well linted project",
   "main": "lib/index.js",
   "module": "es/index.js",
   "unpkg": "dist/index.js",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@block-dev/create-config": "latest",
+    "@block-dev/create-config": "^0.1.2",
     "kolorist": "^1.5.0",
     "minimist": "^1.2.5",
     "prompts": "^2.4.1"
@@ -43,5 +43,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "bin": {
+    "create-block": "lib/index.js"
   }
 }

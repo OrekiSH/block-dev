@@ -57,10 +57,16 @@ interface {
   repository?: string // repository in package.json
   author?: string // author in package.json
   homepage?: string // homepage in package.json
+
+  /* custom */
+  custom_scripts?: Record<string, string> // append fields in scripts filed
+  custom_dependencies?: Record<string, string> // append fields in dependencies filed
+  custom_dev_dependencies?: Record<string, string> // append fields in devDependencies filed
+  custom_package_json_fields: Record<string, any> // overwrite fields in package.json
 }
 ```
 
-## Usage
+### Usage
 
 ```ts
 import { genConfigFiles } from '@block-dev/create-config';
@@ -86,4 +92,18 @@ genConfigFiles({
   author: 'OrekiSH <orekish@163.com> (https://github.com/OrekiSH)',
   repository: 'https://github.com/OrekiSH/block-dev',
 });
+```
+
+## @block-dev/create-block
+
+🔨 Scaffolding a well linted project
+
+## Usage
+
+```shell
+npm init @block-dev/block@latest
+# OR
+yarn create @block-dev/block
+# OR
+pnpx @block-dev/create-block
 ```

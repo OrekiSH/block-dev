@@ -1,6 +1,4 @@
-# block-dev
-
-## @block-dev/create-config
+<h1 align="center">@block-dev/create-config</h1>
 
 🔨 Utilities to create a well linted project
 
@@ -15,7 +13,7 @@
 - typescript
 - vue2/vue3: eslint-vue
 
-### Options
+## Options
 
 ```ts
 interface {
@@ -62,28 +60,29 @@ interface {
 
 ## Usage
 
-```ts
-import { genConfigFiles } from '@block-dev/create-config';
+Config in this package is created by following code:
+
+```js
+import { genConfigFiles } from './src';
 
 genConfigFiles({
-  main: true,
-  ts: true,
-  ts_esm: true,
-  airbnb: true,
-  husky: true,
-  lint_staged: true,
-  commitlint: true,
-  // commitlint options
-  scope: true,
-  type_enum: true,
-  scope_min: 3,
-  subject_min: 5,
-  // inject custom eslint rules
-  eslint_rules: {
-    '@typescript-eslint/naming-convention': 0,
-  },
+  name: '@block-dev/create-config',
+  description: '🔨 Utilities to create a well linted project',
   license: 'MIT',
   author: 'OrekiSH <orekish@163.com> (https://github.com/OrekiSH)',
   repository: 'https://github.com/OrekiSH/block-dev',
+  ts: true,
+  ts_esm: true,
+  editorconfig: false,
+  gitignore: false,
+  custom_dev_dependencies: {
+    'npm-run-all': '^4.1.5',
+  },
+  custom_scripts: {
+    build: 'npm-run-all --parallel build:*',
+    'build:es': 'tsc --p ./tsconfig.es.json',
+    'build:cjs': 'tsc',
+    'lint:js': 'eslint . --ignore-path .eslintignore',
+  },
 });
 ```

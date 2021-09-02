@@ -1,0 +1,55 @@
+{
+  "name": "block-dev",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "dist",
+    "es"
+  ],
+  "keywords": [],
+  "authors": [
+    "OrekiSH <orekish@163.com> (https://github.com/OrekiSH)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OrekiSH/block-dev"
+  },
+  "bugs": "https://github.com/OrekiSH/block-dev/issues",
+  "license": "MIT",
+  "scripts": {
+    "lint:js": "eslint . --ignore-path .eslintignore",
+    "lintfix": "eslint --fix . --ignore-path .eslintignore",
+    "pre-commit": "lint-staged",
+    "prepare": "test -e .husky && echo husky installed || husky install && test -e .husky/pre-commit && echo pre-commit exists || npx husky add .husky/pre-commit 'npm run pre-commit' && test -e .husky/commit-msg && echo commit-msg exists || npx husky add .husky/commit-msg 'npx --no-install commitlint --edit \"$1\"'",
+    "prepublishOnly": "npm run build"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "npm run lint:js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.23.4",
+    "generator-code": "^1.5.5",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.0.0",
+    "typescript": "^4.3.5",
+    "yo": "^4.2.0"
+  }
+}

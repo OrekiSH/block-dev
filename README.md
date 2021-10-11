@@ -14,6 +14,7 @@
 - lint-staged
 - typescript
 - vue2/vue3: eslint-vue
+- vite
 
 ### Options
 

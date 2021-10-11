@@ -1,11 +1,11 @@
-import { CommitLintConfigOptions } from './config/linter/commitlint';
+import { CommitlintConfigOptions } from './config/linter/commitlint';
 import { ESLintConfigOptions } from './config/linter/eslint';
-import { StyleLintConfigOptions } from './config/linter/stylelint';
+import { StylelintConfigOptions } from './config/linter/stylelint';
 
 export interface PackageJSONOptions
   extends ESLintConfigOptions,
-  StyleLintConfigOptions,
-  CommitLintConfigOptions {
+  StylelintConfigOptions,
+  CommitlintConfigOptions {
   name?: string;
   version?: string;
   description?: string;
@@ -24,6 +24,9 @@ export interface PackageJSONOptions
   main?: boolean;
   editorconfig?: boolean;
   gitignore?: boolean;
+  vite?: boolean;
+  externals?: boolean;
+  tslib?: boolean;
 }
 
 export const useVue2 = (opts: PackageJSONOptions) => {
@@ -34,14 +37,15 @@ export const useVue2 = (opts: PackageJSONOptions) => {
   return vue;
 };
 
-export const useVue = (opts: PackageJSONOptions) => {
-  const vue = useVue2(opts)
-    || opts?.vue_essential
+export const useVue3 = (opts: PackageJSONOptions) => {
+  const vue = opts?.vue_essential
     || opts?.vue_recommended
     || opts?.vue_strongly_recommended;
 
   return vue;
 };
+
+export const useVue = (opts: PackageJSONOptions) => useVue2(opts) || useVue3(opts);
 
 export const genPackageJSON = (opts: PackageJSONOptions) => {
   // eslint
@@ -55,11 +59,33 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
   const style_recommended = opts?.style_recommended && !opts?.style_standard;
   const stylelint = opts?.style_recommended || opts?.style_standard;
 
+  // vue
+  const vue3 = useVue3(opts);
+  const vue2 = useVue2(opts);
+  const vue3Version = '^3.2.19';
+  const vueVersion = vue3 ? vue3Version : '^2.6.14';
+  const vueRouterVersion = vue3 ? '^4.0.11' : '^3.5.2';
+  const vuexVersion = vue3 ? '^4.0.2' : '^3.6.2';
+
   const {
     ts, scss, husky, lint_staged, commitlint, repository, main, name, prettier,
+    vite, tslib,
   } = opts || {};
   const eslintFiles = ['js', vue && 'vue', ts && 'ts'].filter(Boolean);
   const stylelintFiles = ['css', vue && 'vue', scss && 'scss,sass'].filter(Boolean);
+
+  // build script
+  let build;
+  if (tslib) build = 'npm-run-all --parallel build:*';
+  else if (vite) build = 'vite build';
+
+  // build:es script
+  let build_es;
+  if (tslib) build_es = 'tsc --p ./tsconfig.es.json';
+
+  // build:cjs script
+  let build_cjs;
+  if (tslib) build_cjs = 'tsc';
 
   return {
     name: name || undefined,
@@ -84,6 +110,10 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
     license: opts?.license,
     scripts: {
       ...opts?.custom_scripts,
+      dev: vite ? 'vite' : undefined,
+      build,
+      'build:es': build_es,
+      'build:cjs': build_cjs,
       'lint:js': eslint ? 'eslint . --ignore-path .eslintignore' : undefined,
       'lint:style': stylelint ? 'stylelint . --ignore-path .stylelintignore' : undefined,
       'pre-commit': lint_staged ? 'lint-staged' : undefined,
@@ -109,13 +139,21 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
       }
       : undefined,
     dependencies: {
+      vue: vite ? vueVersion : undefined,
+      vuex: vite ? vuexVersion : undefined,
+      'vue-router': vite ? vueRouterVersion : undefined,
+      '@vue/composition-api': vite && vue2 ? '^1.2.3' : undefined,
       ...opts?.custom_dependencies,
     },
     devDependencies: {
       ...opts?.custom_dev_dependencies,
       // babel
-      '@babel/core': '^7.14.6',
-      '@babel/preset-env': '^7.14.7',
+      '@babel/core': '^7.15.5',
+      '@babel/preset-env': '^7.15.6',
+      '@babel/preset-typescript': vite ? '^7.15.0' : undefined,
+      '@babel/plugin-transform-runtime': vite ? '^7.15.0' : undefined,
+      '@vue/babel-preset-jsx': vite && vue2 ? '^1.2.4' : undefined,
+      '@vue/babel-plugin-jsx': vite && vue3 ? '^1.1.0' : undefined,
 
       // eslint
       eslint: eslint ? '^7.30.0' : undefined,
@@ -131,6 +169,7 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
 
       // typescript
       typescript: ts ? '^4.3.5' : undefined,
+      'npm-run-all': ts ? '^4.1.5' : undefined,
       '@typescript-eslint/eslint-plugin': ts && eslint ? '^4.28.4' : undefined,
       'eslint-config-standard-with-typescript': ts && standard ? '^20.0.0' : undefined,
       'eslint-config-airbnb-typescript': ts && airbnb ? '^12.3.1' : undefined,
@@ -159,6 +198,16 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
       // hooks
       husky: husky ? '^7.0.1' : undefined,
       'lint-staged': lint_staged ? '^11.0.0' : undefined,
+
+      // vite
+      vite: vite ? '^2.6.2' : undefined,
+      '@vitejs/plugin-vue': vite && vue3 ? '^1.9.2' : undefined,
+      'vite-plugin-vue2': vite && vue2 ? '^1.8.2' : undefined,
+      'vue-template-compiler': vite && vue2 ? vueVersion : undefined,
+      '@vue/compiler-sfc': vite ? vue3Version : undefined, // vue2 for vite-plugin-pages
+      'vite-plugin-externals': vite ? '^0.3.0' : undefined,
+      'vite-plugin-pages': vite ? '^0.18.1' : undefined,
+      'vite-plugin-vue-layouts': vite ? '^0.5.0' : undefined,
     },
     publishConfig: {
       access: 'public',
@@ -166,12 +215,3 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
     ...opts.custom_package_json_fields,
   };
 };
-
-// eslint-disable-next-line arrow-body-style
-export const genPackageJSONFile = (opts: PackageJSONOptions) => {
-  return JSON.stringify(genPackageJSON(opts), null, 2);
-};
-
-export const genBabelConfigFile = () => JSON.stringify({
-  presets: ['@babel/preset-env'],
-}, null, 2);

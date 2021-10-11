@@ -5,7 +5,9 @@ export type ESLintConfigOptions = Partial<{
   vue_strongly_recommended: boolean;
   vue2_recommended: boolean;
   vue_recommended: boolean;
+
   ts: boolean;
+
   standard: boolean;
   airbnb: boolean;
   eslint_rules: Record<string, LintRule>;
@@ -60,8 +62,6 @@ export const genESLintConfig = (opts: ESLintConfigOptions = {}) => {
     rules: {},
   };
 };
-
-export const genESLintConfigFile = (opts = {}) => JSON.stringify(genESLintConfig(opts), null, 2);
 
 export const genESLintIgnoreFile = () => `
 node_modules

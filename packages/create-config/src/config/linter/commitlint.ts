@@ -1,6 +1,6 @@
 import { LintRule } from './eslint';
 
-export type CommitLintConfigOptions = Partial<{
+export type CommitlintConfigOptions = Partial<{
   scope: boolean;
   type_enum: boolean;
   scope_min: number;
@@ -8,7 +8,7 @@ export type CommitLintConfigOptions = Partial<{
   commitlint_rules: Record<string, LintRule>;
 }>;
 
-export const genCommitLintConfig = (opts: CommitLintConfigOptions = {}) => {
+export const genCommitlintConfig = (opts: CommitlintConfigOptions = {}) => {
   const types = [
     'build',
     'ci',
@@ -33,7 +33,3 @@ export const genCommitLintConfig = (opts: CommitLintConfigOptions = {}) => {
     },
   };
 };
-
-export const genCommitLintConfigFile = (opts = {}) => (
-  JSON.stringify(genCommitLintConfig(opts), null, 2)
-);

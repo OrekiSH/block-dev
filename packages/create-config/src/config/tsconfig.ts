@@ -22,5 +22,19 @@ export const genEsmTSConfig = () => ({
   },
 });
 
-export const genTSConfigFile = () => JSON.stringify(genTSConfig(), null, 2);
-export const genEsmTSConfigFile = () => JSON.stringify(genEsmTSConfig(), null, 2);
+export const genViteTsConfig = () => ({
+  compilerOptions: {
+    target: 'esnext',
+    useDefineForClassFields: true,
+    module: 'esnext',
+    moduleResolution: 'node',
+    strict: true,
+    jsx: 'preserve',
+    sourceMap: true,
+    resolveJsonModaule: true,
+    esModuleInterop: true,
+    lib: ['esnext', 'dom'],
+    types: ['vite-plugin-pages/client', 'vite-plugin-vue-layouts/client'],
+  },
+  include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.tsx', 'src/**/*.vue'],
+});

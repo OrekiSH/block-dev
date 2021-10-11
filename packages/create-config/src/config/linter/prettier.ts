@@ -1,4 +1,4 @@
-export const genPrettierConfigFile = () => JSON.stringify({
+export const genPrettierConfig = () => ({
   // max 100 characters per line
   printWidth: 100,
   // use 2 spaces for indentation
@@ -35,7 +35,7 @@ export const genPrettierConfigFile = () => JSON.stringify({
   endOfLine: 'lf',
   // formats quoted code embedded
   embeddedLanguageFormatting: 'auto',
-}, null, 2);
+});
 
 export const genPrettierIgnoreFile = () => `
 node_modules

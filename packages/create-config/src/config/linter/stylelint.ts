@@ -1,6 +1,6 @@
 import { LintRule } from './eslint';
 
-export type StyleLintConfigOptions = Partial<{
+export type StylelintConfigOptions = Partial<{
   scss: boolean;
   style_standard: boolean;
   style_recommended: boolean;
@@ -9,7 +9,7 @@ export type StyleLintConfigOptions = Partial<{
   prettier: boolean;
 }>;
 
-export const genStyleLintConfig = (opts: StyleLintConfigOptions = {}) => {
+export const genStylelintConfig = (opts: StylelintConfigOptions = {}) => {
   const { scss, prettier } = opts || {};
   const recommended = opts?.style_recommended && !opts?.style_standard;
   const standard = opts?.style_standard && !opts?.style_recommended;
@@ -35,11 +35,7 @@ export const genStyleLintConfig = (opts: StyleLintConfigOptions = {}) => {
   };
 };
 
-export const genStyleLintConfigFile = (opts = {}) => (
-  JSON.stringify(genStyleLintConfig(opts), null, 2)
-);
-
-export const genStyleLintIgnoreFile = () => `
+export const genStylelintIgnoreFile = () => `
 node_modules
 dist
 lib

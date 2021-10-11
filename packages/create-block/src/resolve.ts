@@ -12,11 +12,12 @@ export interface UserChoice {
   linters: Linter[]
   eslintConfig?: ESLintConfig
   stylelintConfig?: StylelintConfig
+  repository?: string
 }
 
 export function resolveConfig(choice: UserChoice): PackageJSONOptions {
   const {
-    variant = '', linters = [], eslintConfig, stylelintConfig,
+    variant = '', linters = [], eslintConfig, stylelintConfig, repository,
   } = choice;
 
   const result: PackageJSONOptions = {
@@ -24,9 +25,10 @@ export function resolveConfig(choice: UserChoice): PackageJSONOptions {
     description: '',
     license: 'MIT',
     author: '',
-    repository: '',
+    repository,
     ts: variant.includes('ts'),
     ts_esm: variant.includes('ts'),
+    tslib: variant.includes('ts'),
     gitignore: true,
     husky: linters.includes('husky'),
     commitlint: linters.includes('commitlint'),

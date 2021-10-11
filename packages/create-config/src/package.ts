@@ -148,8 +148,8 @@ export const genPackageJSON = (opts: PackageJSONOptions) => {
     devDependencies: {
       ...opts?.custom_dev_dependencies,
       // babel
-      '@babel/core': '^7.15.5',
-      '@babel/preset-env': '^7.15.6',
+      '@babel/core': tslib ? undefined : '^7.15.5',
+      '@babel/preset-env': tslib ? undefined : '^7.15.6',
       '@babel/preset-typescript': vite ? '^7.15.0' : undefined,
       '@babel/plugin-transform-runtime': vite ? '^7.15.0' : undefined,
       '@vue/babel-preset-jsx': vite && vue2 ? '^1.2.4' : undefined,

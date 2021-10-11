@@ -1,6 +1,6 @@
 {
   "name": "@block-dev/create-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "🔨 Scaffolding a well linted project",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -29,14 +29,12 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@block-dev/create-config": "^0.1.2",
+    "@block-dev/create-config": "^0.1.4",
     "kolorist": "^1.5.0",
     "minimist": "^1.2.5",
     "prompts": "^2.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.7",
     "@types/prompts": "^2.0.14",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.3.5"

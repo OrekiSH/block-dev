@@ -78,6 +78,11 @@ async function init() {
           }),
         },
         {
+          type: (variant) => (variant === 'vanilla-ts' ? 'text' : null),
+          name: 'repository',
+          message: 'Repository name:',
+        },
+        {
           type: 'multiselect',
           name: 'linters',
           message: 'Pick linters:',

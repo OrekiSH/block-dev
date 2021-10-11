@@ -1,6 +1,6 @@
 {
   "name": "@block-dev/create-config",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "🔨 Utilities to create a well linted project",
   "main": "lib/index.js",
   "module": "es/index.js",

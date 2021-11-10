@@ -8,7 +8,9 @@ import { genConfigFiles } from '@block-dev/create-config';
 import {
   Choice, FRAMEWORKS, TEMPLATES,
 } from './frameworks';
-import { ESLINT_CONFIGS, LINTERS, STYLELINT_CONFIGS } from './linters';
+import {
+  ESLINT_CONFIGS, ESLINT_PLUGIN_VUE_CONFIGS, LINTERS, STYLELINT_CONFIGS,
+} from './linters';
 import { resolveConfig, UserChoice } from './resolve';
 import { emptyDir, isValidPackageName, toValidPackageName } from './utils';
 
@@ -86,18 +88,39 @@ async function init() {
           type: 'multiselect',
           name: 'linters',
           message: 'Pick linters:',
-          choices: LINTERS.map((e) => ({
-            title: e.name,
-            value: e.name,
-            selected: e.selected,
-          })),
+          choices: (prev, values) => {
+            const isVite = values.framework.name === 'vite';
+
+            if (isVite) {
+              const stylelint = LINTERS.find((e) => e.name === 'stylelint');
+              if (stylelint) stylelint.selected = true;
+            }
+            return LINTERS.map((e) => ({
+              title: e.name,
+              value: e.name,
+              selected: e.selected,
+            }));
+          },
         },
         {
           type: (linters) => (linters.includes('eslint') ? 'select' : null),
           name: 'eslintConfig',
           message: 'Pick a eslint config:',
           choices: ESLINT_CONFIGS.map((e: Choice) => ({
-            title: e.color(e.name),
+            title: e.color(e.display),
+            value: e.name,
+          })),
+        },
+        // eslint + vue
+        {
+          type: (prev, values) => {
+            const { linters, variant } = values;
+            return ((linters.includes('eslint') && variant.startsWith('vue')) ? 'select' : null);
+          },
+          name: 'eslintPluginVueConfig',
+          message: 'Pick a eslint-plugin-vue config:',
+          choices: ESLINT_PLUGIN_VUE_CONFIGS.map((e: Choice) => ({
+            title: e.color(e.display),
             value: e.name,
           })),
         },
@@ -106,7 +129,7 @@ async function init() {
           name: 'stylelintConfig',
           message: 'Pick a stylelint config:',
           choices: STYLELINT_CONFIGS.map((e: Choice) => ({
-            title: e.color(e.name),
+            title: e.color(e.display),
             value: e.name,
           })),
         },

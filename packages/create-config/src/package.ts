@@ -38,9 +38,9 @@ export const useVue2 = (opts: PackageJSONOptions) => {
 };
 
 export const useVue3 = (opts: PackageJSONOptions) => {
-  const vue = opts?.vue_essential
-    || opts?.vue_recommended
-    || opts?.vue_strongly_recommended;
+  const vue = opts?.vue3_essential
+    || opts?.vue3_recommended
+    || opts?.vue3_strongly_recommended;
 
   return vue;
 };

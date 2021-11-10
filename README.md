@@ -47,11 +47,14 @@ interface {
 
   /* eslint-vue */
   vue2_essential?: boolean // if use eslint-plugin-vue or not
-  vue_essential?: boolean
+  vue3_essential?: boolean
   vue2_strongly_recommended?: boolean
-  vue_strongly_recommended?: boolean
+  vue3_strongly_recommended?: boolean
   vue2_recommended?: boolean
-  vue_recommended?: boolean
+  vue3_recommended?: boolean
+
+  /* vite */
+  vite?: boolean
 
   /* repository */
   license?: string // license in package.json

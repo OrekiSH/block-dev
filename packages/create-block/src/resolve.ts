@@ -1,6 +1,8 @@
 import type { PackageJSONOptions } from '@block-dev/create-config';
 import { Framework, Variant } from './frameworks';
-import { ESLintConfig, Linter, StylelintConfig } from './linters';
+import {
+  ESLintConfig, ESLintPluginVueConfig, Linter, StylelintConfig,
+} from './linters';
 
 export interface UserChoice {
   name: string
@@ -11,6 +13,7 @@ export interface UserChoice {
   variant: Variant
   linters: Linter[]
   eslintConfig?: ESLintConfig
+  eslintPluginVueConfig?: ESLintPluginVueConfig
   stylelintConfig?: StylelintConfig
   repository?: string
 }
@@ -18,7 +21,9 @@ export interface UserChoice {
 export function resolveConfig(choice: UserChoice): PackageJSONOptions {
   const {
     variant = '', linters = [], eslintConfig, stylelintConfig, repository,
+    framework,
   } = choice;
+  const isVite = framework.name === 'vite';
 
   const result: PackageJSONOptions = {
     name: choice.name,
@@ -26,7 +31,7 @@ export function resolveConfig(choice: UserChoice): PackageJSONOptions {
     license: 'MIT',
     author: '',
     repository,
-    ts: variant.includes('ts'),
+    ts: variant.includes('ts') || isVite,
     ts_esm: variant.includes('ts'),
     tslib: variant.includes('ts'),
     gitignore: true,
@@ -34,6 +39,15 @@ export function resolveConfig(choice: UserChoice): PackageJSONOptions {
     commitlint: linters.includes('commitlint'),
     lint_staged: linters.includes('lint-staged'),
   };
+
+  // vite
+  if (isVite) {
+    result.vite = true;
+    // vue
+    if ((variant === 'vue2' || variant === 'vue3') && choice.eslintPluginVueConfig) {
+      result[`${variant}_${choice.eslintPluginVueConfig}`] = true;
+    }
+  }
 
   if (eslintConfig && linters.includes('eslint')) {
     result[eslintConfig] = true;

@@ -1,6 +1,6 @@
 {
   "name": "@block-dev/create-block",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "🔨 Scaffolding a well linted project",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@block-dev/create-config": "^0.1.4",
+    "@block-dev/create-config": "^0.2.0",
     "kolorist": "^1.5.0",
     "minimist": "^1.2.5",
     "prompts": "^2.4.1"

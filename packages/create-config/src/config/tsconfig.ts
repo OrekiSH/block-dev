@@ -31,7 +31,7 @@ export const genViteTsConfig = () => ({
     strict: true,
     jsx: 'preserve',
     sourceMap: true,
-    resolveJsonModaule: true,
+    resolveJsonModule: true,
     esModuleInterop: true,
     lib: ['esnext', 'dom'],
     types: ['vite-plugin-pages/client', 'vite-plugin-vue-layouts/client'],

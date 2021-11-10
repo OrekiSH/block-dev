@@ -1,10 +1,10 @@
 export type ESLintConfigOptions = Partial<{
   vue2_essential: boolean;
-  vue_essential: boolean;
+  vue3_essential: boolean;
   vue2_strongly_recommended: boolean;
-  vue_strongly_recommended: boolean;
+  vue3_strongly_recommended: boolean;
   vue2_recommended: boolean;
-  vue_recommended: boolean;
+  vue3_recommended: boolean;
 
   ts: boolean;
 
@@ -36,11 +36,11 @@ export const genESLintConfig = (opts: ESLintConfigOptions = {}) => {
     },
     extends: [
       opts?.vue2_essential && 'plugin:vue/essential',
-      opts?.vue_essential && 'plugin:vue/vue3-essential',
+      opts?.vue3_essential && 'plugin:vue/vue3-essential',
       opts?.vue2_strongly_recommended && 'plugin:vue/strongly-recommended',
-      opts?.vue_strongly_recommended && 'plugin:vue/vue3-strongly-recommended',
+      opts?.vue3_strongly_recommended && 'plugin:vue/vue3-strongly-recommended',
       opts?.vue2_recommended && 'plugin:vue/recommended',
-      opts?.vue_recommended && 'plugin:vue/vue3-recommended',
+      opts?.vue3_recommended && 'plugin:vue/vue3-recommended',
 
       isAirbnb && !ts && 'airbnb-base',
       isStandard && !ts && 'standard',

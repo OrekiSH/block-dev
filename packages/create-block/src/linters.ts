@@ -1,5 +1,5 @@
 import {
-  yellow, green,
+  yellow, green, blue,
 } from 'kolorist';
 
 export const ESLINT_CONFIGS = [
@@ -17,16 +17,36 @@ export const ESLINT_CONFIGS = [
 
 export type ESLintConfig = 'airbnb' | 'standard';
 
-export const STYLELINT_CONFIGS = [
+export const ESLINT_PLUGIN_VUE_CONFIGS = [
   {
     name: 'recommended',
-    display: 'stylelint-config-recommended',
+    display: 'plugin:vue/recommended',
+    color: blue,
+  },
+  {
+    name: 'strongly_recommended',
+    display: 'plugin:vue/strongly-recommended',
+    color: green,
+  },
+  {
+    name: 'essential',
+    display: 'plugin:vue/essential',
     color: yellow,
   },
+];
+
+export type ESLintPluginVueConfig = 'essential' | 'strongly_recommended' | 'recommended';
+
+export const STYLELINT_CONFIGS = [
   {
     name: 'standard',
     display: 'stylelint-config-standard',
     color: green,
+  },
+  {
+    name: 'recommended',
+    display: 'stylelint-config-recommended',
+    color: yellow,
   },
 ];
 
